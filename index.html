@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Task</title>
+    <style>
+        /* Basic styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .box-container {
+            width: 300px;
+            margin: 20px 0;
+        }
+
+        .box {
+            background-color: #00a8871f;
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: height 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            padding: 10px 0;
+            border: 1px solid green;
+        }
+
+        .box p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .box-options {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 10px;
+        }
+
+        .box.expanded {
+            height: 200px;
+        }
+
+        .box.expanded .box-options {
+            display: block;
+            text-align: center;
+        }
+
+        .option-button {
+            margin: 5px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .option-button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .option-button:active {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Box -->
+    <div class="box-container">
+        <div class="box" onclick="toggleBox(this)">
+            <p>Box 1</p>
+            <div class="box-options">
+                <button class="option-button" onclick="changeColor(this, 'red')">Red</button>
+                <button class="option-button" onclick="changeColor(this, 'blue')">Blue</button>
+                <button class="option-button" onclick="changeColor(this, 'cyan')">Cyan</button>
+                <button class="option-button" onclick="changeSize(this, '',350)">Width 350px</button>
+                <button class="option-button" onclick="changeSize(this, 350)">Height 350px</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Middle Box -->
+    <div class="box-container">
+        <div class="box expanded" onclick="toggleBox(this)">
+            <p style="display: none;">Box 2</p>
+            <div class="box-options">
+                <button class="option-button" onclick="changeColor(this, 'yellow')">Yellow</button>
+                <button class="option-button" onclick="changeColor(this, 'purple')">Purple</button>
+                <button class="option-button" onclick="changeColor(this, 'orange')">Orange</button>
+                <button class="option-button" onclick="changeSize(this, '',400)">Width 400px</button>
+                <button class="option-button" onclick="changeSize(this, 400)">Height 400px</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Box -->
+    <div class="box-container">
+        <div class="box" onclick="toggleBox(this)">
+            <p>Box 3</p>
+            <div class="box-options">
+                <button class="option-button" onclick="changeColor(this, 'pink')">Pink</button>
+                <button class="option-button" onclick="changeColor(this, 'brown')">Brown</button>
+                <button class="option-button" onclick="changeColor(this, 'gray')">Gray</button>
+                <button class="option-button" onclick="changeSize(this, '', 450)">Width 450px</button>
+                <button class="option-button" onclick="changeSize(this, 450)">Height 450px</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to toggle the expansion of the box
+        function toggleBox(clickedBox) {
+            // Close all other boxes and show their <p> tag
+            const allBoxes = document.querySelectorAll('.box');
+            allBoxes.forEach(box => {
+                const pTag = box.querySelector('p');
+                if (box !== clickedBox) {
+                    box.classList.remove('expanded');
+                    box.style="";  // Remove style from collapsed boxes
+                    pTag.style.display = 'block';  // Show the <p> tag for collapsed boxes
+                }
+            });
+
+            // Toggle the clicked box
+            const clickedTag = clickedBox.querySelector('p');
+            clickedBox.classList.toggle('expanded');
+
+            // Hide the <p> tag of the expanded box
+            if (clickedBox.classList.contains('expanded')) {
+                clickedTag.style.display = 'none';  // Hide the <p> tag when expanded
+            } else {
+                clickedTag.style.display = 'block';  // Show the <p> tag when collapsed
+                clickedBox.style="";   // Remove style when collapsed 
+            }
+        }
+
+        // Function to change the background color of the box
+        function changeColor(buttonElement, color) {
+            const boxElement = buttonElement.closest('.box');
+            boxElement.style.backgroundColor = color;
+            boxElement.classList.toggle('expanded');
+        }
+
+        // Function to change the size (height/ width) of the box
+        function changeSize(buttonElement, height, width) {
+            const boxElement = buttonElement.closest('.box');
+            if(height){
+                boxElement.style.height = height + 'px';
+            }
+            if(width){
+                boxElement.style.width = width + 'px';
+            }
+            boxElement.classList.toggle('expanded');
+        }
+    </script>
+
+</body>
+
+</html>
